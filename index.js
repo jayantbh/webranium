@@ -43,9 +43,9 @@ var getFontData = function (svg) {
 		var replacement = svg[j].match(rgx);
 		if(replacement){
 			//console.log(svg[j])
-			console.log("unicode=\"&#"+(200+j)+";\"");
-			svg[j] = svg[j].replace(replacement[0],"unicode=\"&#"+(200+j)+";\"");
-			charMap[replacement[1]] = "&#"+(200+j)+";";
+			console.log("unicode=\"&#"+(300+j)+";\"");
+			svg[j] = svg[j].replace(replacement[0],"unicode=\"&#"+(300+j)+";\"");
+			charMap[replacement[1]] = "&#"+(300+j)+";";
 		}
 
 	}
