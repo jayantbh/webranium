@@ -4,28 +4,106 @@
 	<meta charset="UTF-8">
 	<title>Webranium Test</title>
 
+	<!--suppress CssInvalidPropertyValue -->
 	<style>
 		@font-face {
 			font-family: "webranium";
-			src: url(../static/webranium.ttf) format('truetype');
+			src: url(../static_wbr/webranium.ttf) format('truetype');
 		}
 
 		@font-face {
 			font-family: "webranium_original";
-			src: url(../static/webranium_original.ttf) format('truetype');
+			src: url(../static_wbr/webranium_original.ttf) format('truetype');
 		}
 
 		* {
 			font-family: 'webranium', 'webranium_original', sans-serif;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			word-break: break-word;
+		}
+
+		.unobfuscated {
+			font-family: 'webranium_original', sans-serif;
+		}
+
+		body {
+			background-color: #AEB5B7;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			width: 100vw;
+			margin: 0;
+			padding: 0;
+		}
+
+		.card {
+			border-radius: 0.5rem;
+			background-color: #654C4F;
+			height: 80vh;
+			width: 90vw;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+			padding: 1rem;
+		}
+
+		.card-content {
+			color: #FFFFFF;
+			text-align: center;
+		}
+
+		h1, h3, h5 {
+			color: #B26E63;
+			text-align: center;
+		}
+
+		h2, h4, h6 {
+			color: #CEC075;
+			text-align: center;
+		}
+
+		.bounding-box {
+			border: 2px dashed;
+			padding: 0.5rem;
+		}
+
+		textarea#obfuscated_test {
+			width: 100%;
+			font-size: 2rem;
+			resize: none;
 		}
 	</style>
 </head>
 <body>
-<!--<h1>The Quick Brown Fox, Jumped Over The Lazy Dog. +12 34 56 78 90 !@#$%^&*()</h1>-->
-<h1>This is normal text.</h1>
-<h1>Standard issue text that is same on the inside and outside.</h1>
+<div class="card">
+	<h1>Webranium</h1>
 
-<h1><%- webranium.process("This is obfuscated text.") %></h1>
-<h1><%- webranium.process("This... is more than meets the eye.") %></h1>
+	<h2>A Node.js text obfuscation script, used with EJS.</h2>
+
+	<div class="card-content">
+		<h3>This is normal text.</h3>
+
+		<div class="bounding-box">
+			<p>Standard issue text that is same on the inside and outside.</p>
+		</div>
+
+		<h3><%- webranium.process("This is obfuscated text.") %></h3>
+
+		<h4>Below is the actual and obfuscated version of a popular piece of text.</h4>
+
+		<div class="bounding-box">
+			<p><%- webranium.process("The Quick Brown Fox, Jumps Over The Lazy Dog.") %></p>
+
+			<p class="unobfuscated"><%- webranium.process("The Quick Brown Fox, Jumps Over The Lazy Dog.") %></p>
+		</div>
+		<h3><label for="obfuscated_test">Try pasting the obfuscated string here:</label></h3>
+		<textarea class="unobfuscated" name="obfuscated_test" id="obfuscated_test" rows="4"></textarea>
+	</div>
+</div>
 </body>
 </html>

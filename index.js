@@ -39,41 +39,31 @@ var getFontData = function (svg) {
 	}
 
 	svg = svg.split("\n");
+	var initrnd = 200 + Math.floor(Math.random()*100);
 	for (var j = 0; j < svg.length; j++) {
 		var replacement = svg[j].match(rgx);
 		if(replacement){
 			//console.log(svg[j])
-			console.log("unicode=\"&#"+(300+j)+";\"");
-			svg[j] = svg[j].replace(replacement[0],"unicode=\"&#"+(300+j)+";\"");
-			charMap[replacement[1]] = "&#"+(300+j)+";";
+			//console.log("unicode=\"&#"+(300+j)+";\"");
+			svg[j] = svg[j].replace(replacement[0],"unicode=\"&#"+(initrnd+j)+";\"");
+			charMap[replacement[1]] = "&#"+(initrnd+j)+";";
 		}
 
 	}
-
-    //
-	//var rndCode = Random.hex(true)(Random.engines.nativeMath, 2);
-	//for (var j = 0; j < replacement.length; j++) {
-	//	var replacer = "unicode=\"&#x"+parseInt(parseInt(rndCode,16)+j).toString(16)+";\"";
-	//	svg = svg.replace(result[j],replacer);
-	//	charMap[rgxl.exec(result[j])[1]] = rgxl.exec(replacer)[1];
-	//	//console.log("GFD",replacement[j], result[j]);
-	//}
-	console.log("GFD",charMap);
-	//console.log("GFD",svg.join("\n"));
 	return svg.join("\n");
 };
 
 
-var ttf = svg2ttf(fs.readFileSync('static/roboto_original.svg'), {});
-fs.writeFileSync('webranium_original.ttf', new Buffer(ttf.buffer));
+var ttf = svg2ttf(fs.readFileSync('static_wbr/roboto_original.svg'), {});
+fs.writeFileSync('static_wbr/webranium_original.ttf', new Buffer(ttf.buffer));
 
 function generate() {
-	fs.readFile('static/roboto.svg', function (err, buffer) {
+	fs.readFile('static_wbr/roboto.svg', function (err, buffer) {
 		if (!!err) throw err;
 
 		var ttfb = new Buffer(getFontData(buffer.toString()));
 		var ttf = svg2ttf(ttfb, {});
-		fs.writeFileSync('static/webranium.ttf', new Buffer(ttf.buffer));
+		fs.writeFileSync('static_wbr/webranium.ttf', new Buffer(ttf.buffer));
 	});
 }
 
@@ -81,21 +71,23 @@ var webranium = {
 	process: function (str) {
 		str = str.split("");
 		for (var i = 0; i < str.length; i++) {
-			//console.log(find);
-			//console.log("P> ",str[i])
 			str[i] = charMap[str[i]];
-			//find[i] = find[i].replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-			//str = str.replace(new RegExp(find[i], 'g'), replace[i]);
 		}
-		//console.log(str.join(""));
 		return str.join("");
 	}
 };
 generate();
-setInterval(generate, 1000000);
+setInterval(generate, 10000);
 app.get("/", function (req, res) {
 	//res.sendFile(__dirname + "/index.html");
 	res.render("index", {webranium: webranium});
+});
+
+app.use("/static_wbr/webranium.ttf", function (req, res, next) {
+	res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+	res.header("Pragma", "no-cache");
+	res.header("Expires", 0);
+	next();
 });
 
 app.use(express.static(__dirname));
