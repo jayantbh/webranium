@@ -22,7 +22,6 @@
     "body-parser": "^1.15.0",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
-    "random-js": "^1.0.8",
     "svg2ttf": "^4.0.0",
     "ttf2svg": "0.0.7"
   }

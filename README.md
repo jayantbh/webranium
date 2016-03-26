@@ -1,11 +1,20 @@
 # webranium
 Text obfuscation engine.
 
-### Note:
-If there are errors in XMLDOM, or basically SVG parsing and font generation 
-and stuff (in short, if it mentions xmldom or sax.js), go to `node_modules/xmldom/sax.js`
- and on around line 36, add this as the first line of the `parse` function definition:
-     
-	source = source.toString();
+### Install:
+
+	npm i
+	node index.js
 	
-That should fix it.
+### Notes:
+The demo uses EJS, you can use it with any other server side rendering framework.  
+But it needs to be rendered server side.  
+It has some bugs, I'll fix if and when someone spots em.
+
+### How to use?
+
+	var Webranium = require('./webranium'); //require Webranium
+	app.set('view engine', 'ejs');          //Set a view engine
+	
+	Webranium.init(<Express App Variable>, <ModifiedSVG>, <GeneratedTTFfromModdedSVG>, <OriginalSVG>, <GeneratedTTFfromOriginalSVG>);   //Must have 3 or 5 parameters.
+	Webranium.generate(10000);  //Generate font. Pass an optional `interval` parameter to generate a random font every `N` milliseconds.
