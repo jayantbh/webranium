@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Webranium Test</title>
+
+	<style>
+		@font-face {
+			font-family: "webranium";
+			src: url(../static/webranium.ttf) format('truetype');
+		}
+
+		@font-face {
+			font-family: "webranium_original";
+			src: url(../static/webranium_original.ttf) format('truetype');
+		}
+
+		* {
+			font-family: 'webranium', 'webranium_original', sans-serif;
+		}
+	</style>
+</head>
+<body>
+<!--<h1>The Quick Brown Fox, Jumped Over The Lazy Dog. +12 34 56 78 90 !@#$%^&*()</h1>-->
+<h1>1234567890</h1>
+<h1>The Quick Brown Fox, Jumped Over The Lazy Dog. +12 34 56 78 90 !@#$%^&*()</h1>
+<h1><%- webranium.process("The Quick Brown Fox, Jumped Over The Lazy Dog. +12 34 56 78 90 !@#$%^&*()") %></h1>
+</body>
+</html>
