@@ -77,6 +77,11 @@
 			font-size: 2rem;
 			resize: none;
 		}
+		.u{
+			border-bottom: 1px solid;
+			line-height: 1.5em;
+			display: inline-block;
+		}
 	</style>
 </head>
 <body>
@@ -98,11 +103,11 @@
 		<h4>Below is the actual and obfuscated version of a popular piece of text.</h4>
 
 		<div class="bounding-box">
-			<p><%- webranium.process("The Quick Brown Fox, Jumps Over The Lazy Dog.") %></p>
+			<p class="u"><%- webranium.process("The Quick Brown Fox, Jumps Over The Lazy Dog.") %></p>
 
 			<p class="unobfuscated"><%- webranium.process("The Quick Brown Fox, Jumps Over The Lazy Dog.") %></p>
 		</div>
-		<h3><label for="obfuscated_test">Try pasting the obfuscated string here:</label></h3>
+		<h3><label for="obfuscated_test">Try pasting the underlined string here:</label></h3>
 		<textarea class="unobfuscated" name="obfuscated_test" id="obfuscated_test" rows="4"></textarea>
 	</div>
 </div>
