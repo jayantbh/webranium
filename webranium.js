@@ -1,13 +1,10 @@
 /**
  * Created by jayantbhawal on 27/3/16.
  */
-var fs = require('fs');
-var svg2ttf = require('svg2ttf');
+var fs = require("fs");
+var svg2ttf = require("svg2ttf");
 
-var modifiedSVG,
-	modifiedTTF,
-	untouchedSVG,
-	untouchedTTF;
+var modifiedSVG, modifiedTTF, untouchedSVG, untouchedTTF;
 
 var find = [];
 var replace = [];
@@ -39,10 +36,12 @@ var getFontData = function (svg) {
 		if (replacement) {
 			//console.log(svg[j])
 			//console.log("unicode=\"&#"+(300+j)+";\"");
-			svg[j] = svg[j].replace(replacement[0], "unicode=\"&#" + (initrnd + j) + ";\"");
+			svg[j] = svg[j].replace(
+				replacement[0],
+				'unicode="&#' + (initrnd + j) + ';"'
+			);
 			charMap[replacement[1]] = "&#" + (initrnd + j) + ";";
 		}
-
 	}
 	return svg.join("\n");
 };
@@ -56,7 +55,7 @@ function generate(interval) {
 		fs.writeFileSync(modifiedTTF, new Buffer(ttf.buffer));
 	});
 	if (interval) {
-		setTimeout(generate, 10000);
+		setTimeout(() => generate(interval), interval);
 	}
 }
 
@@ -70,21 +69,26 @@ function process(str) {
 
 function init(app, modSVG, modTTF, originalSVG, originalTTF) {
 	if (!(arguments.length == 3 || arguments.length == 5) || !app.use) {
-		throw new Error("Webranium.init(...) must be passed 2 or 4 arguments in the order as (app,modSVG,modTTF,originalSVG,originalTTF)," +
-			" where the app parameter is the express server object, modSVG is the SVG font file containing only the " +
-			"alphanumeric and special characters on the keyboard, and the originalSVG is the untouched SVG file so that " +
-			"both of them may be included in the view.");
-	}
-	else if(!svg2ttf){
-		throw new Error("Missing dependency `svg2ttf`. To install, use `npm i -S svg2ttf`.");
-	}
-	else {
+		throw new Error(
+			"Webranium.init(...) must be passed 2 or 4 arguments in the order as (app,modSVG,modTTF,originalSVG,originalTTF)," +
+				" where the app parameter is the express server object, modSVG is the SVG font file containing only the " +
+				"alphanumeric and special characters on the keyboard, and the originalSVG is the untouched SVG file so that " +
+				"both of them may be included in the view."
+		);
+	} else if (!svg2ttf) {
+		throw new Error(
+			"Missing dependency `svg2ttf`. To install, use `npm i -S svg2ttf`."
+		);
+	} else {
 		if (arguments.length >= 3) {
 			modifiedSVG = modSVG;
 			modifiedTTF = modTTF;
 
 			app.use("/static_wbr/webranium.ttf", function (req, res, next) {
-				res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+				res.header(
+					"Cache-Control",
+					"no-cache, no-store, must-revalidate"
+				);
 				res.header("Pragma", "no-cache");
 				res.header("Expires", 0);
 				next();
@@ -103,5 +107,5 @@ function init(app, modSVG, modTTF, originalSVG, originalTTF) {
 module.exports = {
 	init: init,
 	process: process,
-	generate: generate
+	generate: generate,
 };
