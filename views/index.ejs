@@ -101,13 +101,13 @@
 		</div>
 
 		<h3><%- webranium.process("This is obfuscated text.") %></h3>
-
+		<p>Generated every <%- interval %> minutes.</p>
 		<h4>Below is the actual, followed by the obfuscated version of a popular quote.</h4>
 
 		<div class="bounding-box">
-			<p class="u"><%- webranium.process("Where there is love there is life.") %></p>
+			<p class="u"><%- webranium.process("Where there is a will, there is a way.") %></p>
 
-			<p class="unobfuscated"><%- webranium.process("Where there is love there is life.") %></p>
+			<p class="unobfuscated"><%- webranium.process("Where there is a will, there is a way.") %></p>
 		</div>
 		<h3><label for="obfuscated_test">Try pasting the underlined string here:</label></h3>
 		<textarea class="unobfuscated" name="obfuscated_test" id="obfuscated_test" placeholder="Enter text here..." rows="4"></textarea>
